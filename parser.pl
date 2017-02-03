@@ -53,9 +53,9 @@ postfix([H|T], T) :- member(postfix, H).
 %%
 num_args([H|T], NumArgs, T) :- member(number,H),
 								get_tail(H, NumArgs).
-%%
-% Helpers
-%%
+%%%%%%%%%%%
+% Helpers %
+%%%%%%%%%%%
 
 % Gets the tail of an ordered pair.
 %%
@@ -64,6 +64,9 @@ get_tail(Pair, Tail_Val) :- nth(2, Pair, Tail_Val).
 
 %%
 % NOTES:
-% Use nth1, number, and isList builtins
+% Use nth, number, and isList builtins
 % PROLOG doesnt use integer divide for your normal divide command. Use 'div' builtin
+% NOTE IN README:
+%	- You can include command sequences as arguments, but they must be in a nested list '[' ']'
+%	- Mention that the interpret rule implicitly print the result.
 %%

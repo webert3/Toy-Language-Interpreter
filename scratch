@@ -1,7 +1,14 @@
-[[punctuation,'('],[identifier,postfix],[number,1],[number,4],[identifier,sub],[punctuation,'('],[number,1],[punctuation,')'],[punctuation,')'],[punctuation,eof]]
+[[punctuation,'('],[identifier,postfix],[number,1],[identifier,sub],[punctuation,'('],[number,1],[punctuation,')'],[punctuation,')'],[punctuation,eof]]
 
-(postfix 1 4 sub (1)) eof
+(postfix 1 sub (1)) eof
 
 [[punctuation,'('],[identifier,postfix],[number,1],[punctuation,'('],[number,1],[punctuation,')'],[punctuation,')'],[punctuation,eof]]
 
 (postfix 1 (1))
+
+[[punctuation,'('],[identifier,postfix],[number,1],[number,4],[identifier,sub],[punctuation,'('],[number,3],[number,4],[identifier,sub],[punctuation,')'],[identifier,exec],[number,3],[punctuation,')'],[punctuation,eof]]
+
+(postfix 1 4 sub (3 4 sub) exec 3)
+
+
+(postfix 1 4 sub (3 4 sub) exec 3)
