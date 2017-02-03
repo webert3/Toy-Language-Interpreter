@@ -1,1 +1,1 @@
-(postfix 23 4 sub)))))))
+(postfix 1 4 sub 3)
