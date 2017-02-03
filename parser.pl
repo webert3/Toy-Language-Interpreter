@@ -10,16 +10,14 @@ parse(Tokens, AST) :- program(Tokens, [[punctuation,')'],[punctuation,eof]], AST
 program(Tokens, Rest, [NumArgs|AST]) :- open_brack(Tokens, T1), 
 						postfix(T1, T2), 
 						num_args(T2, NumArgs, T3),
-						command_sequence(T3, AST, Rest),
-						write('AST list (w/o NumArgs): '),
-						write_list(AST),nl.
+						command_sequence(T3, AST, Rest).
 
 
 % Handles command sequences
 %%
 command_sequence(List, [AST_Head|AST_Tail], Rest) :- command(List, AST_Head, List1),
 													command_sequence(List1,AST_Tail,Rest).
-command_sequence(List, AST, List). 
+command_sequence(List, [], List). 
 
 
 % Handles all valid command tokens.
@@ -55,15 +53,13 @@ postfix([H|T], T) :- member(postfix, H).
 %%
 num_args([H|T], NumArgs, T) :- member(number,H),
 								get_tail(H, NumArgs).
-
+%%
 % Helpers
 %%
-get_tail(Pair, Tail_Val) :- nth(2, Pair, Tail_Val).
 
-write_list([]).
-write_list([Head|Tail]) :-
-  write(Head), write(','),
-  write_list(Tail).
+% Gets the tail of an ordered pair.
+%%
+get_tail(Pair, Tail_Val) :- nth(2, Pair, Tail_Val).
 
 
 %%
