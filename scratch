@@ -1,0 +1,7 @@
+[[punctuation,'('],[identifier,postfix],[number,1],[number,4],[identifier,sub],[punctuation,'('],[number,1],[punctuation,')'],[punctuation,')'],[punctuation,eof]]
+
+(postfix 1 4 sub (1)) eof
+
+[[punctuation,'('],[identifier,postfix],[number,1],[punctuation,'('],[number,1],[punctuation,')'],[punctuation,')'],[punctuation,eof]]
+
+(postfix 1 (1))
