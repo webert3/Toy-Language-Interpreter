@@ -10,14 +10,17 @@ parse(Tokens, AST) :- program(Tokens, [[punctuation,')'],[punctuation,eof]], AST
 program(Tokens, Rest, [NumArgs|AST]) :- open_brack(Tokens, T1), 
 						postfix(T1, T2), 
 						num_args(T2, NumArgs, T3),
-						command_sequence(T3, AST, Rest).
+						command_sequence(T3, AST, Rest),
+						write('AST list (w/o NumArgs): '),
+						write_list(AST),nl.
 
 
 % Handles command sequences
 %%
-command_sequence(List, [AST_Head|AST_Tail], Rest) :- command(List, AST_Head, List1),write(AST_Head),nl,
+command_sequence(List, [AST_Head|AST_Tail], Rest) :- command(List, AST_Head, List1),
 													command_sequence(List1,AST_Tail,Rest).
 command_sequence(List, AST, List). 
+
 
 % Handles all valid command tokens.
 %%
@@ -35,7 +38,7 @@ command([H|T],AST_Head, T) :- member(number, H),get_tail(H,AST_Head);
 					member(sel, H),get_tail(H,AST_Head);
 					member(nget, H),get_tail(H,AST_Head);
 					member(exec, H),get_tail(H,AST_Head).
-command([[punctuation,'(']|T], Rest) :- command_sequence(T, [[punctuation,')']|Rest]).
+command([[punctuation,'(']|T], AST_Head, Rest) :- command_sequence(T, AST_Head, [[punctuation,')']|Rest]).
 
 % Checks for opening bracket
 %%
@@ -54,7 +57,17 @@ num_args([H|T], NumArgs, T) :- member(number,H),
 								get_tail(H, NumArgs).
 
 % Helpers
+%%
+get_tail(Pair, Tail_Val) :- nth(2, Pair, Tail_Val).
 
-get_tail([H|T], T).
+write_list([]).
+write_list([Head|Tail]) :-
+  write(Head), write(','),
+  write_list(Tail).
 
-% Use nth1, and is list builtin
+
+%%
+% NOTES:
+% Use nth1, number, and isList builtins
+% PROLOG doesnt use integer divide for your normal divide command. Use 'div' builtin
+%%
