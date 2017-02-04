@@ -30,7 +30,7 @@ command_sequence(List, [], List).
 % 	Output: T - Rest of tokens
 %%
 
-command([H|T],AST_Head, T) :- member(number, H),get_tail(H,AST_Head);
+command([H|T], AST_Head, T) :- member(number, H),get_tail(H,AST_Head);
 					member(add, H),get_tail(H,AST_Head);
 					member(sub, H),get_tail(H,AST_Head);
 					member(mul, H),get_tail(H,AST_Head);
@@ -44,7 +44,16 @@ command([H|T],AST_Head, T) :- member(number, H),get_tail(H,AST_Head);
 					member(sel, H),get_tail(H,AST_Head);
 					member(nget, H),get_tail(H,AST_Head);
 					member(exec, H),get_tail(H,AST_Head).
+
+% Case for command sequence.
 command([[punctuation,'(']|T], AST_Head, Rest) :- command_sequence(T, AST_Head, [[punctuation,')']|Rest]).
+
+% Case for negative integer
+command([H|T], AST_Head, New_T) :- member(-, H),
+								get_next(T, New_H, New_T),
+								member(number, New_H),
+								get_tail(New_H,New_AST_Head),
+								is(AST_Head, -1 * New_AST_Head).
 
 % Checks for opening bracket.
 %	Input: [H|T] - Token list
@@ -79,3 +88,7 @@ num_args([H|T], NumArgs, T) :- member(number,H),
 
 get_tail(Pair, Tail_Val) :- nth(2, Pair, Tail_Val).
 
+% Get next token and the tokens following.
+%%
+
+get_next([H|T], H, T).
