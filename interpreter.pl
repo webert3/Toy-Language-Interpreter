@@ -1,4 +1,7 @@
+% includes
 :- include('parser.pl').
+
+
 %%
 % NOTES:
 % Use nth, number, length, and isList builtins
@@ -30,7 +33,8 @@ process_commands(Commands, Stack, Result) :- execute_command(Commands,Stack,Resu
 
 % Return stack head as the result IF it is a number.
 %%
-process_commands([], [Stack_Head|Stack_Rest], Stack_Head) :- number(Stack_Head). 
+process_commands([], [Stack_Head|Stack_Rest], Stack_Head) :- number(Stack_Head).
+
 
 %
 % Logic for the execution of each command in Postfix.
@@ -156,8 +160,8 @@ execute_command([Command|Rest], Stack1, Result) :- (Command == sel),
 	pop(Stack2, Val2, Stack3),
 	pop(Stack3, Val3, Stack4),
 	number(Val3),
-	choose_val(Val1, Val2, Val3, Result),
-	push(Stack4, Result, Stack5),
+	choose_val(Val1, Val2, Val3, Chosen),
+	push(Stack4, Chosen, Stack5),
 	process_commands(Rest, Stack5, Result). 
 
 % nget

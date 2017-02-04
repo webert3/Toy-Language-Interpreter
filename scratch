@@ -13,6 +13,8 @@
 
 (postfix 1 4 sub (3 4 sub) exec 3)
 
+(postfix 1 1 nget 0 lt (0 swap sub) () sel exec).
+
 
 Calls to interpret:
 
@@ -44,7 +46,7 @@ interpret([2,exec],[[3,2,1], 3]).
 	      | 1 2 3 3
 
 
-
+interpret([1,1,nget,0,lt,[0,swap,sub],[],sel,exec],[-7]).
 
 
 % rem
@@ -56,3 +58,20 @@ execute_command([Command|Rest], Stack1, Result) :- (Command == rem),
 	is(Remainder, Val2 rem Val1),
 	push(Stack3, Remainder, Stack4),
 	process_commands(Rest, Stack4, Result).
+
+
+
+// Testing sel
+(postfix 1 2 3 sel). -[17]-> 2
+interpret([1,2,3,sel],[17]).
+
+
+	// Empty command sequnces
+
+	(postfix 1 1 nget 0 lt (0 swap sub) () sel exec). -->
+
+	interpret([1,1,nget,0,lt,[0,swap,sub],[0],sel,exec],[-7]).
+
+interpret([1,[],exec],[1]).	
+
+
