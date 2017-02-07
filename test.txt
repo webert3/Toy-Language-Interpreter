@@ -1,1 +1,0 @@
-(postfix 1 1 nget 0 lt (0 swap sub) () sel exec)

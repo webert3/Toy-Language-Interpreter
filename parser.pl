@@ -2,10 +2,14 @@
 :- include('scanner.pl').
 
 % Parser
-%	Input: List of tokenized values returned from scanner.
-%	Output: AST of the form [Num, [Commands]].
+%	Input:  Tokens - List of tokenized values returned from scanner.
+%	Output: AST - AST of the form [Num, [Commands]].
 %%
+
 parse(Tokens, AST) :- program(Tokens, [[punctuation,')'],[punctuation,eof]], AST).
+
+% Checks for valid beginning tokens, then calls command_sequence to build AST.
+%%
 
 program(Tokens, Rest, [NumArgs|AST]) :- open_brack(Tokens, T1), 
 						postfix(T1, T2), 
@@ -56,39 +60,30 @@ command([H|T], AST_Head, New_T) :- member(-, H),
 								is(AST_Head, -1 * New_AST_Head).
 
 % Checks for opening bracket.
-%	Input: [H|T] - Token list
-% 	Output: T - Rest of tokens
 %%
 
 open_brack([H|T], T) :- member('(',H).
 
 % Checks for 'postfix' string.
-%	Input: [H|T] - Token list
-% 	Output: T - Rest of tokens
 %%
 
 postfix([H|T], T) :- member(postfix, H).
 
-% Checks that an argument number is specified.
-%	Input: [H|T] - Token list
-% 	Output: T - Rest of tokens
-%			NumArgs - Number of arguments.
+% Checks that an argument number is specified and returns as NumArgs.
 %%
 
 num_args([H|T], NumArgs, T) :- member(number,H),
 								get_tail(H, NumArgs).
-%%
-% Helpers
-%%
 
-% Gets the tail of an ordered pair.
-%	Input:  Pair - Pair [<token value>,<token>] 
-% 	Output: Tail_Val - Value of second member.
+
+% Helpers:
+
+% Gets the second element of an ordered pair.
 %%
 
 get_tail(Pair, Tail_Val) :- nth(2, Pair, Tail_Val).
 
-% Get next token and the tokens following.
+% Gets next token and the tokens following.
 %%
 
 get_next([H|T], H, T).

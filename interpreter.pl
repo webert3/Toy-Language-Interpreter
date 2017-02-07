@@ -1,46 +1,33 @@
 % includes
 :- include('parser.pl').
 
-
-%%
-% NOTES:
-% Use nth, number, length, and isList builtins
-% PROLOG doesnt use integer divide for your normal divide command. Use 'div' builtin
-% NOTE IN README:
-%	- You can include command sequences as arguments, but they must be in a nested list '[' ']'
-%	- Mention that the interpret rule implicitly print the result.
-%%
-
 % Reads from AST, and interpets the code. Prints result.
-%	Input: [NumArgs|AST] - AST, split to differentiate the Number of Arguments and the
-%						   list of commands (AST).
+%	Input: [NumArgs|AST] - List containing the Number of Arguments
+%						   and the list of commands (AST).
 %		   Args - Arguments input by the user.
 % 	Output: Result will be printed to stdout.
 %%
 
 interpret([NumArgs|AST], Args) :- length(Args, NumArgs),
 									process_commands(AST, Args, Result),
-									write('Result: '), 
+									write('Result: '),
 									write(Result).
 
 % Processes postfix comands until AST is empty.
 %	Input: Commands - List of commands to be executed.
-%		   Stack - It is the stack...
+%		   Stack - The stack, initialized with user arguments.
 % 	Output: Result will contain the top element on the stack if it is numeric.
 %%
 
-process_commands(Commands, Stack, Result) :- execute_command(Commands,Stack,Result). 
-
-% Return stack head as the result IF it is a number.
-%%
+process_commands(Commands, Stack, Result) :- execute_command(Commands,Stack,Result).
 process_commands([], [Stack_Head|Stack_Rest], Stack_Head) :- number(Stack_Head).
 
 
-%
 % Logic for the execution of each command in Postfix.
 %	Input:  [Command|Rest] - Splitting command list.
 %			Stack1 - The initial stack.
 %			Rest - Following commands in sequence.
+%	Output: Result - Set after all commands have bene executed.
 %%
 
 % exec
@@ -94,13 +81,14 @@ execute_command([Command|Rest], Stack1, Result) :- (Command == mul),
 execute_command([Command|Rest], Stack1, Result) :- (Command == div),
 	pop(Stack1,Val1,Stack2),
 	number(Val1),
+	not_zero(Val1),
 	pop(Stack2,Val2,Stack3),
 	number(Val2),
 	is(Dividend, Val2 // Val1),
 	push(Stack3, Dividend, Stack4),
 	process_commands(Rest, Stack4, Result).
 
-% rem (NOTE: rem is a builtin for gprolog... so I had to 
+% rem (NOTE: rem is a builtin for gprolog... so I had to
 %	   use member/2 to avoid a prolog syntax error).
 execute_command([Command|Rest], Stack1, Result) :- member(Command,[rem]),
 	pop(Stack1,Val1,Stack2),
@@ -152,7 +140,7 @@ execute_command([Command|Rest], Stack1, Result) :- (Command == swap),
 	pop(Stack2, Val2, Stack3),
 	push(Stack3, Val1, Stack4),
 	push(Stack4, Val2, Stack5),
-	process_commands(Rest, Stack5, Result).	
+	process_commands(Rest, Stack5, Result).
 
 % sel
 execute_command([Command|Rest], Stack1, Result) :- (Command == sel),
@@ -162,7 +150,7 @@ execute_command([Command|Rest], Stack1, Result) :- (Command == sel),
 	number(Val3),
 	choose_val(Val1, Val2, Val3, Chosen),
 	push(Stack4, Chosen, Stack5),
-	process_commands(Rest, Stack5, Result). 
+	process_commands(Rest, Stack5, Result).
 
 % nget
 execute_command([Command|Rest], Stack1, Result) :- (Command == nget),
@@ -172,9 +160,6 @@ execute_command([Command|Rest], Stack1, Result) :- (Command == nget),
 	number(Val_N),
 	push(Stack2, Val_N, Stack3),
 	process_commands(Rest, Stack3, Result).
-
-
-
 
 
 % Push and Pop functions
@@ -215,4 +200,8 @@ eq(0, Val2, Val1) :- (Val2 =\= Val1).
 % Chooses which element to push based on value of Val3
 %%
 choose_val(Val1, Val2, Val3, Val1) :- (Val3 =:= 0).
-choose_val(Val1, Val2, Val3, Val2) :- (Val3 =\= 0). 
+choose_val(Val1, Val2, Val3, Val2) :- (Val3 =\= 0).
+
+% Check if value does not equal 0.
+%%
+not_zero(Val) :- (Val =\= 0).
