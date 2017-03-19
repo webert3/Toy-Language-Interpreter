@@ -4,7 +4,8 @@ Parser and Interpreter for toy language 'PostFix'. This language is defined in t
 
 USAGE:  
 `
-? - [interpreter].  </br>
+? - [interpreter].  
+
 ? - scan('<filname>', Tokens),parse(Tokens, AST),interpret(AST,[<arguments>]). 
 ` 
 </br>
