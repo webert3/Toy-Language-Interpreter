@@ -3,7 +3,6 @@ Written by Ted Weber on Feb. 5, 2017.
 Parser and Interpreter for toy language 'PostFix'. This is a stack-based language defined in the textbook _Design Concepts in Programming Languages_, by Franklyn Turbak and David Gifford.  
 
 USAGE:  
-
 ```
 ? - [interpreter].  
 
@@ -11,7 +10,6 @@ USAGE:
 ```
 
 NOTES: 
-
 	• You only need to consult interpreter.pl to load all predicates.  
 	
 	• The result will be written to stdout as 'Result: _your result_', if given a valid postfix program. _arguments_ is assumed to be a valid list in Prolog. E.g. [1,2].  
