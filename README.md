@@ -12,8 +12,6 @@ USAGE:
 NOTES:  </br>
 	⋅⋅* You only need to consult interpreter.pl to load all predicates.  
 	⋅⋅* The result will be written to stdout as 'Result: _your result_', if given a valid postfix program. _arguments_ is assumed to be a valid list in Prolog. E.g. [1,2].  
-	⋅⋅* I wanted the interpreter to handle negative integers, but it should be
-      noted that the scanner tokenizes the strings '(postfix 0 -1)' and
-      '(postfix 0 - 1)' as the same set of tokens. Thus, my parser will treat any unary '-' followed by an integer token (even with intermediate spaces) as a negative integer. Something like (postfix 0 - - 1) is invalid syntax.  
+	⋅⋅* I wanted the interpreter to handle negative integers, but it should be noted that the scanner tokenizes the strings '(postfix 0 -1)' and '(postfix 0 - 1)' as the same set of tokens. Thus, my parser will treat any unary '-' followed by an integer token (even with intermediate spaces) as a negative integer. Something like (postfix 0 - - 1) is invalid syntax.  
     ⋅⋅* No modifications were made to scanner.pl, and the author is credited in the source.  
 
