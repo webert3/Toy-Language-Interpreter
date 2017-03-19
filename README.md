@@ -4,10 +4,11 @@ Parser and Interpreter for toy language 'PostFix'. This language is defined in t
 
 USAGE:  
 `
-? - [interpreter].  
-? - scan('<filname>', Tokens),parse(Tokens, AST),interpret(AST,[<arguments>]).  
+? - [interpreter].  </br>
+? - scan('<filname>', Tokens),parse(Tokens, AST),interpret(AST,[<arguments>]). 
 ` 
-NOTES:  
+</br>
+NOTES:  </br>
 	- You only need to consult interpreter.pl to load all predicates.  
 	- The result will be written to stdout as 'Result: <your result>', if given a valid postfix program.  
     - <arguments> is assumed to be a valid list in Prolog. E.g. [1,2].  
