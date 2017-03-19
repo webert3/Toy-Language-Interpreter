@@ -1,6 +1,6 @@
 Written by Ted Weber on Feb. 5, 2017.
-CSCI 512 - Assignment 1
-Parser and Interpreter for toy language 'PostFix'. This language is defined in the textbook Design Concepts in Programming Languages, by Franklyn Turbak and David Gifford.
+
+Parser and Interpreter for toy language 'PostFix'. This language is defined in the textbook _Design Concepts in Programming Languages_, by Franklyn Turbak and David Gifford.
 
 USAGE:
 `
