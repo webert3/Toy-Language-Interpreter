@@ -4,11 +4,11 @@ Parser and Interpreter for toy language 'PostFix'. This is a stack-based languag
 
 USAGE:  
 
-`
+```
 ? - [interpreter].  
 
 ? - scan('_filename_', Tokens),parse(Tokens, AST),interpret(AST,[_arguments_]).  
-` 
+```
 
 NOTES:  </br>
 	* You only need to consult interpreter.pl to load all predicates.  
