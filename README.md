@@ -6,7 +6,7 @@ USAGE:
 ```
 ? - [interpreter].  
 
-? - scan('filename', Tokens),parse(Tokens, AST),interpret(AST,[arguments]).  
+? - scan('<filename>', Tokens),parse(Tokens, AST),interpret(AST,[<arguments>]).  
 ```
 
 NOTES: 
